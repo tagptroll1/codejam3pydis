@@ -1,6 +1,6 @@
+from constants import NextColor
 from pygame import Surface
 from pygame.sprite import Sprite
-from constants import NextColor
 
 
 class Building(Sprite):

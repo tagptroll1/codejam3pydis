@@ -1,10 +1,7 @@
 import pygame
-from pygame import Surface
-from pygame.sprite import Sprite
-
-from constants import Color, NextColor
+# from buildings import Building
+from constants import Color
 from tiles import Tile
-from buildings import Building
 
 WIDTH = 1600
 HEIGHT = 900
