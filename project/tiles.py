@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from constants import NextColor
 from pygame import Surface
 from pygame.sprite import Sprite

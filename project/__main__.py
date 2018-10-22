@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pygame
 # from buildings import Building
 from constants import Color
