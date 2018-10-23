@@ -11,7 +11,7 @@ from pygame.sprite import Sprite
 # 0 - No resources
 # 1 - Plant based resource (food)
 # 2 - Animal based resource (food)
-# 3 - Stone based resource 
+# 3 - Stone based resource
 # 4 - wood based resource
 
 
@@ -121,7 +121,7 @@ class WoodTile(Tile):
         self.image.fill(Color.wood.value)
         self.type = 4
 
-        self.start_value = randint(1,5)
+        self.start_value = randint(1, 5)
         self.value = self.start_value
 
 
