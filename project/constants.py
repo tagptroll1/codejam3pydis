@@ -10,6 +10,12 @@ class Color(Enum):
     blue = (0, 0, 255)
     white = (255, 255, 255)
     black = (0, 0, 0)
+    sand = (237, 201, 175)
+    plant = (0, 200, 0)
+    animal = (255, 224, 189)
+    stone = (151, 151, 151)
+    wood = (49, 99, 0)
+    water = (100, 100, 220)
 
     @staticmethod
     def random():

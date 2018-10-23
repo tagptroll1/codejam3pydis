@@ -2,8 +2,10 @@
 
 import pygame
 # from buildings import Building
-from constants import Color
-from tiles import Tile
+from project.constants import Color
+from project.tiles import (
+    AnimalTile, NoResource, PlantTile, StoneTile, WaterTile, WoodTile
+)
 
 WIDTH = 1600
 HEIGHT = 900
@@ -21,11 +23,30 @@ all_sprites = pygame.sprite.Group()
 
 def load_assets():
     # sprite
-    for x in range(0, WIDTH, 32):
-        for y in range(0, HEIGHT, 32):
-            tile = Tile()
-            tile.rect.topleft = (x, y)
-            all_sprites.add(tile)
+    nores = NoResource()
+    all_sprites.add(nores)
+    nores.rect.topleft = (50, 50)
+
+    plant = PlantTile()
+    all_sprites.add(plant)
+    plant.rect.topleft = (250, 250)
+
+    animal = AnimalTile()
+    all_sprites.add(animal)
+    animal.rect.topleft = (550, 550)
+
+    stone = StoneTile()
+    all_sprites.add(stone)
+    stone.rect.topleft = (750, 750)
+
+    wood = WoodTile()
+    all_sprites.add(wood)
+    wood.rect.topleft = (450, 750)
+
+    for x in range(282, WIDTH, 32):
+        water = WaterTile()
+        all_sprites.add(water)
+        water.rect.topleft = (x, 250)
 
 
 def start_loop():
