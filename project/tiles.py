@@ -2,7 +2,7 @@
 
 from random import randint
 
-from constants import Color, NextColor
+from project.constants import Color, NextColor
 from pygame import Surface
 from pygame.sprite import Sprite
 
@@ -11,6 +11,8 @@ from pygame.sprite import Sprite
 # 0 - No resources
 # 1 - Plant based resource (food)
 # 2 - Animal based resource (food)
+# 3 - Stone based resource 
+# 4 - wood based resource
 
 
 class Tile(Sprite):
@@ -22,8 +24,17 @@ class Tile(Sprite):
         self.rect = self.image.get_rect()
         self.type = None
 
+        self.value = 0
+        self.start_value = 0
+
     def update(self) -> None:
         pass  # update logic
+
+    def reset(self) -> None:
+        """
+        Resets the value of the tile to it's starting value
+        """
+        self.value = self.start_value
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} x={self.rect.x}, y={self.rect.y}, type={self.type}>"
@@ -72,12 +83,6 @@ class PlantTile(Tile):
         """
         self.value = 0
 
-    def reset(self) -> None:
-        """
-        Resets the value of the tile to it's starting value
-        """
-        self.value = self.start_value
-
 
 class AnimalTile(Tile):
     """
@@ -99,8 +104,32 @@ class AnimalTile(Tile):
         """
         self.value = self.start_value * 0.5
 
-    def reset(self) -> None:
-        """
-        Resets the value of the tile to it's starting value
-        """
+
+class StoneTile(Tile):
+    def __init__(self):
+        super().__init__()
+        self.image.fill(Color.stone.value)
+        self.type = 3
+
+        self.start_value = randint(2, 8)
+        self.value = self.start_value
+
+
+class WoodTile(Tile):
+    def __init__(self):
+        super().__init__()
+        self.image.fill(Color.wood.value)
+        self.type = 4
+
+        self.start_value = randint(1,5)
+        self.value = self.start_value
+
+
+class WaterTile(Tile):
+    def __init__(self):
+        super().__init__()
+        self.image.fill(Color.water.value)
+        self.type = 5
+
+        self.start_value = randint(1, 2)
         self.value = self.start_value
