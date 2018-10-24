@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
 from random import randint
+
+import pygame
+
+
+pygame.font.init()
 
 
 class Color:
@@ -32,6 +38,22 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 CAMERASPEED = 800
+
+
+class Images:
+    # Icons
+    food_icon = str(Path("project", "sprites", "I_C_Meat.png"))
+
+    # No resource tiles
+    grass = str(Path("project", "sprites", "Hans", "6.png"))
+    grass_rock = str(Path("project", "sprites", "Hans", "5.png"))
+    grass_shrub = str(Path("project", "sprites", "Hans", "4.png"))
+    stone = str(Path("project", "sprites", "Hans", "11.png"))
+
+    # Resources
+    plant = str(Path("project", "sprites", "Hans", "13.png"))
+    plant_pluss = str(Path("project", "sprites", "Hans", "13.png"))
+    plant_minus = str(Path("project", "sprites", "Hans", "13.png"))
 
 
 def random():

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from project.constants import NextColor
+from project.constants import NextColor, TILESIZE
 from pygame import Surface
 from pygame.sprite import Sprite
 

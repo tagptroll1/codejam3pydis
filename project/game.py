@@ -17,6 +17,7 @@ from project.tiles import GetTile as get_tile
 class Game:
     def __init__(self):
         pg.init()
+        pg.font.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(GAMENAME)
         self.clock = pg.time.Clock()
@@ -40,6 +41,7 @@ class Game:
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
+                # Probably newline, but tile is sometimes None
                 if tile in ("012345"):
                     # Fetches helper method for tile lookup and calls it
                     get_tile.loopup(tile)(self, col, row)
@@ -92,7 +94,7 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.draw_grid()
 
-        for sprite in self.all_sprites:
+        for sprite in self.tiles:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
         pg.display.flip()
@@ -110,14 +112,17 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     pass  # open menu
 
-            # Draw stone tile on clicked tile
+            # Draw stone on clicked tile
             if event.type == pg.MOUSEBUTTONDOWN:
+                x = event.pos[0]
+                y = event.pos[1]
+
                 # Calculates diff from start pos and camera pos
                 diffx = self.camera_man.x - self.startx
                 diffy = self.camera_man.y - self.starty
                 # offsets the placement based on differance
-                x = (diffx + event.pos[0]) // TILESIZE
-                y = (diffy + event.pos[1]) // TILESIZE
+                x = (diffx + x) // TILESIZE
+                y = (diffy + y) // TILESIZE
                 get_tile.stone(self, x, y)
 
     def show_start_screen(self):

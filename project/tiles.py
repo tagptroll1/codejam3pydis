@@ -2,7 +2,8 @@
 
 from random import randint
 
-from project.constants import Color, NextColor, TILESIZE
+import pygame
+from project.constants import Color, Images, NextColor, TILESIZE
 from pygame import Surface
 from pygame.sprite import Sprite
 
@@ -18,7 +19,7 @@ from pygame.sprite import Sprite
 
 class Tile(Sprite):
     def __init__(self, game, x: int, y: int):
-        self.groups = game.all_sprites, game.tiles
+        self.groups = game.tiles
         super().__init__(self.groups)
         # TODO: Render sprites over color
         self.game = game
@@ -61,6 +62,20 @@ class NoResource(Tile):
         self.type = 0
 
 
+class Grass(NoResource):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        imgnr = randint(0, 100)
+        if imgnr >= 16:
+            self.path = Images.grass
+        elif imgnr >= 4:
+            self.path = Images.grass_shrub
+        else:
+            self.path = Images.grass_rock
+
+        self.image = pygame.image.load(self.path)
+
+
 class PlantTile(Tile):
     """
     A Tile which provides food from plant matter
@@ -68,7 +83,8 @@ class PlantTile(Tile):
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image.fill(Color.PLANT)
+        self.image = pygame.image.load(Images.plant)
+        # self.image.fill(Color.PLANT)
         self.type = 1  # Plant based food tile
 
         # TODO: Sprite can reflect the amount the tile provides
@@ -78,11 +94,11 @@ class PlantTile(Tile):
     def update(self):
         super().update()
         if self.value > 7:
-            self.image.fill(Color.PLANT_PLUSS)
+            self.image = pygame.image.load(Images.plant_pluss)
         elif self.value < 5:
-            self.image.fill(Color.PLANT_MINUS)
+            self.image = pygame.image.load(Images.plant_minus)
         else:
-            self.image.fill(Color.PLANT)
+            self.image = pygame.image.load(Images.plant)
 
     def rain(self) -> None:
         """
@@ -127,7 +143,7 @@ class AnimalTile(Tile):
 class StoneTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image.fill(Color.STONE)
+        self.image = pygame.image.load(Images.stone)
         self.type = 3
 
         self.start_value = randint(2, 8)
@@ -172,7 +188,7 @@ class GetTile:
 
     @staticmethod
     def noresource(game, x: int, y: int) -> NoResource:
-        return NoResource(game, x, y)
+        return Grass(game, x, y)
 
     @staticmethod
     def plant(game, x: int, y: int) -> PlantTile:
