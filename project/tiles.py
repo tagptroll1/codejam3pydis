@@ -22,7 +22,7 @@ class Tile(Sprite):
         super().__init__(self.groups)
         # TODO: Render sprites over color
         self.game = game
-        self.image = Surface((32, 32))
+        self.image = Surface((TILESIZE, TILESIZE))
         self.image.fill(next(NextColor.nextColor()))
         self.rect = self.image.get_rect()
         self.type = None
@@ -74,6 +74,15 @@ class PlantTile(Tile):
         # TODO: Sprite can reflect the amount the tile provides
         self.start_value = randint(2, 10)
         self.value = self.start_value
+
+    def update(self):
+        super().update()
+        if self.value > 7:
+            self.image.fill(Color.PLANT_PLUSS)
+        elif self.value < 5:
+            self.image.fill(Color.PLANT_MINUS)
+        else:
+            self.image.fill(Color.PLANT)
 
     def rain(self) -> None:
         """

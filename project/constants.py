@@ -10,7 +10,9 @@ class Color:
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     SAND = (237, 201, 175)
+    PLANT_MINUS = (0, 160, 0)
     PLANT = (0, 200, 0)
+    PLANT_PLUSS = (10, 240, 10)  # resourcefull
     ANIMAL = (255, 224, 189)
     STONE = (151, 151, 151)
     WOOD = (49, 99, 0)
@@ -20,16 +22,16 @@ class Color:
 
 WIDTH = 1600
 HEIGHT = 900
-FPS = 30
+FPS = 60
 GAMENAME = "Game Name"
 
 BGCOLOR = Color.BLACK
 
-TILESIZE = 32
+TILESIZE = 64
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
-CAMERASPEED = 250
+CAMERASPEED = 800
 
 
 def random():
