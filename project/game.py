@@ -9,6 +9,7 @@ from project.constants import (
     GAMENAME, GRIDHEIGHT, GRIDWIDTH,
     HEIGHT, TILESIZE, WIDTH
 )
+from project.gui import GUI
 from project.player import CameraMan
 from project.tilemap import Camera, Map
 from project.tiles import GetTile as get_tile
@@ -38,6 +39,9 @@ class Game:
         """
         self.all_sprites = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
+        self.gui_group = pg.sprite.Group()
+        self.resource_gui = pg.sprite.Group()
+        self.gui = GUI(self)
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
@@ -73,6 +77,7 @@ class Game:
         Update the game and sprites
         """
         self.all_sprites.update()
+        self.resource_gui.update()
         self.camera.update(self.camera_man)
 
     def draw_grid(self):
@@ -97,6 +102,8 @@ class Game:
         for sprite in self.tiles:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
+        self.gui_group.draw(self.screen)
+        self.resource_gui.draw(self.screen)
         pg.display.flip()
 
     def events(self):
@@ -116,7 +123,16 @@ class Game:
             if event.type == pg.MOUSEBUTTONDOWN:
                 x = event.pos[0]
                 y = event.pos[1]
+<<<<<<< HEAD
 
+=======
+                for gui in self.gui_group:
+                    if gui.rect.collidepoint(x, y):
+                        # player clicked a gui piece, dont interact with the world
+                        print("guiclick")
+                        gui.food.value += 1
+                        return
+>>>>>>> gui
                 # Calculates diff from start pos and camera pos
                 diffx = self.camera_man.x - self.startx
                 diffy = self.camera_man.y - self.starty
