@@ -123,16 +123,11 @@ class Game:
             if event.type == pg.MOUSEBUTTONDOWN:
                 x = event.pos[0]
                 y = event.pos[1]
-<<<<<<< HEAD
-
-=======
                 for gui in self.gui_group:
                     if gui.rect.collidepoint(x, y):
                         # player clicked a gui piece, dont interact with the world
                         print("guiclick")
-                        gui.food.value += 1
                         return
->>>>>>> gui
                 # Calculates diff from start pos and camera pos
                 diffx = self.camera_man.x - self.startx
                 diffy = self.camera_man.y - self.starty
