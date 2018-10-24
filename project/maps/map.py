@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import numpy as np
 from abc import ABC
-from random import randrange, gauss, seed
 from math import ceil
+from random import gauss, randrange
+
+import numpy as np
 
 
 class Cell(ABC):
