@@ -4,8 +4,8 @@
 
 import argparse
 
-from project.game import Game
 from project.editor.editor import Editor
+from project.game import Game
 
 parser = argparse.ArgumentParser(description="Open game, or editor")
 parser.add_argument(

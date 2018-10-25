@@ -27,11 +27,11 @@ class ResourceGUI(Sprite):
         self.image.fill(Color.GREY)
 
         # resources
-        #self.wood = Wood(self, self.game)
-        #self.stone = Stone(self, self.game)
-        #self.iron = Iron(self, self.game)
+        # self.wood = Wood(self, self.game)
+        # self.stone = Stone(self, self.game)
+        # self.iron = Iron(self, self.game)
         self.food = Food(self, self.game)
-        #self.water = Water(self, self.game)
+        # self.water = Water(self, self.game)
 
     def draw(self):
         self.game.screen.blit(self.image, self.rect)
@@ -81,7 +81,7 @@ class Text(Sprite):
         bitmap_ = self.font.render(self.text, True, self.color)
         self.bitmap = pygame.Surface(bitmap_.get_size(), pygame.SRCALPHA)
 
-        if self.bg != None:
+        if self.bg is not None:
             self.bitmap.fill(self.bg)
 
         self.bitmap.blit(bitmap_, (0, 0))
@@ -98,7 +98,7 @@ class Text(Sprite):
             bitmap_ = self.font.render(self.text, True, self.color)
             self.bitmap = pygame.Surface(bitmap_.get_size(), pygame.SRCALPHA)
 
-            if self.bg != None:
+            if self.bg is not None:
                 self.bitmap.fill(self.bg)
 
             self.bitmap.blit(bitmap_, (0, 0))

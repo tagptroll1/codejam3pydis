@@ -7,7 +7,7 @@ from project.constants import HEIGHT, TILESIZE, WIDTH
 
 
 class Map:
-    def __init__(self, *, data=[], save: Path=None):
+    def __init__(self, *, data=None, save: Path = None):
         self.data = data
         # TODO: generate a map here
         if not data and save:

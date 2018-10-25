@@ -4,8 +4,7 @@ import time
 from pathlib import Path
 
 import pygame as pg
-
-from project.constants import Color, FPS, HEIGHT, GRIDHEIGHT, GRIDWIDTH, TILESIZE, WIDTH
+from project.constants import FPS, GRIDHEIGHT, GRIDWIDTH, HEIGHT, TILESIZE, WIDTH
 from project.editor.gui import GUI
 from project.player import CameraMan
 from project.tilemap import Camera, Map
@@ -18,7 +17,7 @@ class Editor:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption("Game editor")
         self.clock = pg.time.Clock()
-        #self.map = Map([[0] * int(50) for _ in range(int(50))])
+        # self.map = Map([[0] * int(50) for _ in range(int(50))])
         self.map = Map(save=Path("project", "saves", "1540499921.txt"))
 
         self.startx = WIDTH / 2

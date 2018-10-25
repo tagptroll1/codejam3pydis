@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pygame as pg
+from project.constants import Color, HEIGHT, WIDTH, sprite_lookup, sprite_side_lookup
 from pygame.sprite import Sprite
-
-from project.constants import Color, HEIGHT, sprite_lookup, sprite_side_lookup, WIDTH
 
 
 class GUI(Sprite):
