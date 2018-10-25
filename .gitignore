@@ -112,3 +112,6 @@ dmypy.json
 
 # vi
 *.swp
+
+# Vscode
+.vscode/
