@@ -1,11 +1,27 @@
 # -*- coding: utf-8 -*-
+# Pass --editor while running to open the level editor
+# instead of the game.
+
+import argparse
+
 from project.game import Game
+from project.editor.editor import Editor
+
+parser = argparse.ArgumentParser(description="Open game, or editor")
+parser.add_argument(
+    "-e",
+    "--editor",
+    help="Opens the map editor",
+    action="store_true"
+)
+args = vars(parser.parse_args())
+
+if args["editor"]:
+    running = Editor()
+else:
+    running = Game()
 
 
-# create the game object
-g = Game()
-g.show_start_screen()
 while True:
-    g.new()
-    g.run()
-g.show_go_screen()
+    running.new()
+    running.run()

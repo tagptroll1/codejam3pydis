@@ -18,7 +18,6 @@ from project.tiles import GetTile as get_tile
 class Game:
     def __init__(self):
         pg.init()
-        pg.font.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(GAMENAME)
         self.clock = pg.time.Clock()
@@ -40,8 +39,16 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
         self.gui_group = pg.sprite.Group()
-        self.resource_gui = pg.sprite.Group()
-        self.gui = GUI(self)
+        self.resource_icon = pg.sprite.Group()
+        self.resource_text = pg.sprite.Group()
+
+        self.values = {
+            "wood": 0,
+            "stone": 0,
+            "iron": 0,
+            "food": 0,
+            "water": 0
+        }
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
@@ -50,6 +57,8 @@ class Game:
                     # Fetches helper method for tile lookup and calls it
                     get_tile.loopup(tile)(self, col, row)
 
+        # gui
+        self.gui = GUI(self)
         # Camera
         self.camera_man = CameraMan(self, GRIDWIDTH//2, GRIDHEIGHT//2)
         self.camera = Camera(self.map.width, self.map.height)
@@ -77,7 +86,7 @@ class Game:
         Update the game and sprites
         """
         self.all_sprites.update()
-        self.resource_gui.update()
+        self.resource_text.update()
         self.camera.update(self.camera_man)
 
     def draw_grid(self):
@@ -103,7 +112,11 @@ class Game:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
         self.gui_group.draw(self.screen)
-        self.resource_gui.draw(self.screen)
+        self.resource_icon.draw(self.screen)
+
+        for sprite in self.resource_text:
+            sprite.draw(self.gui.resources.image)
+
         pg.display.flip()
 
     def events(self):
@@ -126,6 +139,7 @@ class Game:
                 for gui in self.gui_group:
                     if gui.rect.collidepoint(x, y):
                         # player clicked a gui piece, dont interact with the world
+                        self.values["food"] += 1
                         print("guiclick")
                         return
                 # Calculates diff from start pos and camera pos
