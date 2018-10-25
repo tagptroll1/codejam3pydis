@@ -45,15 +45,37 @@ class Images:
     food_icon = str(Path("project", "sprites", "I_C_Meat.png"))
 
     # No resource tiles
-    grass = str(Path("project", "sprites", "Hans", "6.png"))
-    grass_rock = str(Path("project", "sprites", "Hans", "5.png"))
-    grass_shrub = str(Path("project", "sprites", "Hans", "4.png"))
-    stone = str(Path("project", "sprites", "Hans", "11.png"))
+    grass = str(Path("project", "sprites", "22", "2.png"))
+    grass_rock = str(Path("project", "sprites", "22", "10.png"))
+    wood = str(Path("project", "sprites", "22", "8.png"))
+    stone = str(Path("project", "sprites", "22", "14.png"))
 
     # Resources
-    plant = str(Path("project", "sprites", "Hans", "13.png"))
-    plant_pluss = str(Path("project", "sprites", "Hans", "13.png"))
-    plant_minus = str(Path("project", "sprites", "Hans", "13.png"))
+    plant_minus = str(Path("project", "sprites", "22", "a4.png"))
+    plant = str(Path("project", "sprites", "22", "a5.png"))
+    plant_pluss = str(Path("project", "sprites", "22", "9.png"))
+
+    water = str(Path("project", "sprites", "22", "3.png"))
+    water_side = str(Path("project", "sprites", "22", "4.png"))
+    animal = str(Path("project", "sprites", "22", "16.png"))
+
+
+sprite_lookup = [
+    Images.grass,
+    Images.plant,
+    Images.animal,
+    Images.stone,
+    Images.wood,
+    Images.water
+]
+
+sprite_side_lookup = [
+    Images.water_side
+]
+
+
+class Fonts:
+    arial = pygame.font.SysFont("Arial", 30)
 
 
 def random():
