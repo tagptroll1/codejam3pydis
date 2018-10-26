@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from constants import TILESIZE
+from project.constants import TILESIZE
 from pygame.sprite import Sprite
 
 
 class Building(Sprite):
-    #class for buildings that stores x and y coordinates and manages displaying
+    # class for buildings that stores x and y coordinates and manages displaying
 
     def __init__(self, x, y, image=None):
         super().__init__()
-        #TODO Render sprites over color
+        # TODO Render sprites over color
         self.image = image
         self.x = x
         self.y = y
@@ -25,7 +25,7 @@ class Building(Sprite):
 
 class Resource_building(Building):
     """
-    #class for buildings that produce resources
+    class for buildings that produce resources
     stores the amount of produced resources and the inventory they're added to
     """
     def __init__(self, inv, amount, x, y):
@@ -35,7 +35,7 @@ class Resource_building(Building):
 
 
 """
-#Subclasses for different resource producing buildings manage the different sprites and resources
+Subclasses for different resource producing buildings manage the different sprites and resources
 """
 
 
@@ -65,7 +65,7 @@ class House(Resource_building):
 
 class Mine(Resource_building):
     def __init__(self, inv, amount):
-        
+
         super().__init__(inv, amount)
 
     def add_resource(self):

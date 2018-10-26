@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class Inventory:
     def __init__(self, wood, stone, iron, villagers, food, water, gold):
         self.wood = wood
