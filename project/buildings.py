@@ -45,6 +45,7 @@ class Sawmill(Resource_building):
     def add_resource(self):
         self.inv.wood += self.amount
 
+
 class Stonemill(Resource_building):
     def __init__(self, inv, amount):
         super().__init__(inv, amount)
@@ -52,12 +53,14 @@ class Stonemill(Resource_building):
     def add_resource(self):
         self.inv.stone += self.amount
 
+
 class House(Resource_building):
     def __init__(self, inv, amount):
         super().__init__(inv, amount)
 
     def add_resource(self):
         self.inv.villagers += self.amount
+
 
 class Mine(Resource_building):
     def __init__(self, inv, amount):
@@ -67,6 +70,7 @@ class Mine(Resource_building):
     def add_resource(self):
         self.inv.iron += self.amount
 
+
 class Watermill(Resource_building):
     def __init__(self, inv, amount):
         super().__init__(inv, amount)
@@ -74,12 +78,14 @@ class Watermill(Resource_building):
     def add_resource(self):
         self.inv.water += self.amount
 
+
 class Farm(Resource_building):
     def __init__(self, inv, amount):
         super().__init__(inv, amount)
 
     def add_resource(self):
         self.inv.food += self.amount
+
 
 class Butcher(Resource_building):
     def __init__(self, inv, amount):

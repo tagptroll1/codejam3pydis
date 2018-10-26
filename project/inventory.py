@@ -9,4 +9,3 @@ class Inventory:
         self.food = food 
         self.water = water
         self.gold = gold
-    
