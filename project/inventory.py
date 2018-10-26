@@ -6,6 +6,6 @@ class Inventory:
         self.stone = stone
         self.iron = iron
         self.villagers = villagers
-        self.food = food 
+        self.food = food
         self.water = water
         self.gold = gold

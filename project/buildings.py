@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from pygame import Surface
-from pygame.sprite import Sprite
-from inventory import Inventory
 from constants import TILESIZE
+from pygame.sprite import Sprite
 
 
 class Building(Sprite):
-    #class for buildings that stores x and y coordinates and manages displaying 
+    #class for buildings that stores x and y coordinates and manages displaying
 
     def __init__(self, x, y, image=None):
         super().__init__()
         #TODO Render sprites over color
         self.image = image
-        self.x = x 
-        self.y = y 
+        self.x = x
+        self.y = y
 
     def add_rect(self):
         self.rect = self.image.get_rect()
@@ -24,9 +22,10 @@ class Building(Sprite):
     def __repr__(self):
         return f"<{self.__class__.__name__} x={self.rect.x} y={self.rect.y}>"
 
+
 class Resource_building(Building):
     """
-    class for buildings that produce resources
+    #class for buildings that produce resources
     stores the amount of produced resources and the inventory they're added to
     """
     def __init__(self, inv, amount, x, y):
@@ -34,9 +33,11 @@ class Resource_building(Building):
         self.inv = inv
         self.amount = amount
 
+
 """
-Subclasses for different resource producing buildings manage the different sprites and resources
+#Subclasses for different resource producing buildings manage the different sprites and resources
 """
+
 
 class Sawmill(Resource_building):
     def __init__(self, inv, amount, x, y):
