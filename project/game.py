@@ -37,6 +37,7 @@ class Game:
         Initialize a new game
         """
         self.all_sprites = pg.sprite.Group()
+        self.buildings = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
         self.gui_group = pg.sprite.Group()
         self.resource_icon = pg.sprite.Group()
