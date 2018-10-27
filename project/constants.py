@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-
 from pathlib import Path
 from random import randint
 
 import pygame
-
 
 pygame.font.init()
 
@@ -34,8 +32,8 @@ GAMENAME = "Game Name"
 BGCOLOR = Color.BLACK
 
 TILESIZE = 64
-GRIDWIDTH = WIDTH / TILESIZE
-GRIDHEIGHT = HEIGHT / TILESIZE
+GRIDWIDTH = WIDTH // TILESIZE
+GRIDHEIGHT = HEIGHT // TILESIZE
 
 CAMERASPEED = 800
 
