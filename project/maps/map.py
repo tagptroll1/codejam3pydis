@@ -4,43 +4,17 @@ from random import gauss, randrange
 
 import numpy as np
 
-
-class Cell(ABC):
-    value = None
-
-    def __str__(self):
-        return str(self.value)
-
-
-class Dust(Cell):
-    value = '░'
-
-
-class Grass(Cell):
-    value = '\x1b[0;32;46m▒\x1b[0m'
-
-
-class Tree(Cell):
-    value = '\x1b[0;30;42m▓\x1b[0m'
-
-
-class Bush(Cell):
-    value = '⬡'
-
-
-class Water(Cell):
-    value = '\x1b[0;34m▓\x1b[0m'
+from project.tiles import Grass, WoodTile, WaterTile
 
 
 class Map:
-    def __init__(self, m, n):
-        """Initalize a m×n matrice"""
-        self.m = m
-        self.n = n
-        self.terrain = [[None] * n for _ in range(m)]
-        self.initialize_base_terrain(Grass)
-        self.initialize_trees(randrange((n * m) / 2))
-        self.initialize_rivers(randrange(4), 1)
+    def __init__(self, width, height, game):
+        self.game = game
+        self.width = width
+        self.height = height
+        self.terrain = [[None] * width for _ in range(height)]
+
+        self.generate_terrain()
 
     def __repr__(self):
         return repr(self.terrain)
@@ -51,34 +25,38 @@ class Map:
     def get_parcel(self, x, y):
         return self.terrain[y][x]
 
-    def initialize_parcel(self, x, y, _type, **parcel_kwargs):
-        self.terrain[y][x] = _type(**parcel_kwargs)
+    def set_parcel(self, x, y, _type, **parcel_kwargs):
+        self.terrain[y][x] = _type(self.game, x, y, **parcel_kwargs)
 
-    def initialize_base_terrain(self, parcel_type=Dust, **parcel_kwargs):
+    def initialize_base_terrain(self, parcel_type, **parcel_kwargs):
         """This initialize whole terrain with given parcel types"""
-        for x in range(self.n):
-            for y in range(self.m):
-                self.terrain[y][x] = parcel_type(**parcel_kwargs)
+        for x in range(self.width):
+            for y in range(self.height):
+                self.set_parcel(x, y, parcel_type, **parcel_kwargs)
 
-    def initialize_grass(self):
+    def generate_terrain(self):
+        self.initialize_base_terrain(Grass)
+        self.generate_trees(randrange((self.width * self.height) / 2))
+        self.generate_rivers(randrange(4), 1)
+
+    def generate_grass(self):
+        """ Adds grass everywhere"""
         self.initialize_base_terrain(Grass)
 
-    def initialize_rivers(self, number, max_width):
+    def generate_rivers(self, number, max_width):
         """initate rivers"""
         for _ in range(number):
-            start_point = (randrange(1, self.n - 1), randrange(1, self.m - 1))
+            start_point = (randrange(1, self.width - 1), randrange(1, self.height - 1))
             self.generate_river(start_point, 1)
 
-    def initialize_trees(self, number):
+    def generate_trees(self, number):
         for _ in range(number):
-            x = randrange(0, self.n)
-            y = randrange(0, self.m)
-            self.initialize_parcel(x, y, Tree)
+            x = randrange(0, self.width)
+            y = randrange(0, self.height)
+            self.set_parcel(x, y, WoodTile)
 
     def generate_river(self, start_point, width):
-        # start point
-        self.initialize_parcel(*start_point, Water)
-
+        """ Generates a single river from a starting point"""
         directions = {
             0: np.array((-1, 0)),  # North
             1: np.array((-1, 1)),  # North-Est
@@ -89,17 +67,20 @@ class Map:
             6: np.array((0, -1)),  # West
             7: np.array((-1, -1)),  # North-West
         }
+        # initialize starting point
+        self.set_parcel(*start_point, WaterTile)
+
         # choose a direction
         dir_index = randrange(0, 8)
         new_point = np.array(start_point) + directions[dir_index]
-        self.initialize_parcel(*new_point.tolist(), Water)
+        self.set_parcel(*new_point.tolist(), WaterTile)
         previous_dir_index = dir_index
 
         # TODO an inifinite loop can occure because if no path il allowed.
         # For instance a river trapped inside another one
 
         # draw the river until it hits a border
-        while new_point[0] not in (0, self.n - 1) and new_point[1] not in (0, self.m - 1):
+        while new_point[0] not in (0, self.width - 1) and new_point[1] not in (0, self.height - 1):
             dir_index = int(np.clip(round(gauss(previous_dir_index, 1)), 0, 7))
 
             # no going backwards
@@ -109,8 +90,8 @@ class Map:
             new_point += directions[dir_index]
 
             # no colision with a existing river or itself
-            if isinstance(self.get_parcel(*new_point), Water):
+            if isinstance(self.get_parcel(*new_point), WaterTile):
                 continue
 
-            self.initialize_parcel(*new_point.tolist(), Water)
+            self.set_parcel(*new_point.tolist(), WaterTile)
             previous_dir_index = dir_index

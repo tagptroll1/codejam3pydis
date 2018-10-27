@@ -10,7 +10,8 @@ from project.constants import (
     HEIGHT, TILESIZE, WIDTH
 )
 from project.player import CameraMan
-from project.tilemap import Camera, Map
+from project.tilemap import Camera
+from project.maps.map import Map
 from project.tiles import GetTile as get_tile
 
 
@@ -30,21 +31,22 @@ class Game:
         """
         Load data, generate map?
         """
-        self.map = Map()
+        self.all_sprites = pg.sprite.Group()
+        self.tiles = pg.sprite.Group()
+
+        self.map = Map(GRIDHEIGHT, GRIDWIDTH, game=self)
 
     def new(self):
         """
         Initialize a new game
         """
-        self.all_sprites = pg.sprite.Group()
-        self.tiles = pg.sprite.Group()
 
-        for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                # Probably newline, but tile is sometimes None
-                if tile in ("012345"):
-                    # Fetches helper method for tile lookup and calls it
-                    get_tile.loopup(tile)(self, col, row)
+#        for row, tiles in enumerate(self.map.data):
+#            for col, tile in enumerate(tiles):
+#                # Probably newline, but tile is sometimes None
+#                if tile in ("012345"):
+#                    # Fetches helper method for tile lookup and calls it
+#                    get_tile.loopup(tile)(self, col, row)
 
         # Camera
         self.camera_man = CameraMan(self, GRIDWIDTH//2, GRIDHEIGHT//2)
@@ -111,6 +113,7 @@ class Game:
                 # Button press
                 if event.key == pg.K_ESCAPE:
                     pass  # open menu
+                    self.quit()
 
             # Draw stone on clicked tile
             if event.type == pg.MOUSEBUTTONDOWN:
