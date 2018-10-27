@@ -59,6 +59,15 @@ class Images:
     water_side = str(Path("project", "sprites", "22", "4.png"))
     animal = str(Path("project", "sprites", "22", "16.png"))
 
+    # Buildings
+    butcher = str(Path("project", "sprites", "buildings", "butcher.png"))
+    farm = str(Path("project", "sprites", "buildings", "farm.png"))
+    house = str(Path("project", "sprites", "buildings", "house.png"))
+    mine = str(Path("project", "sprites", "buildings", "mine.png"))
+    sawmill = str(Path("project", "sprites", "buildings", "sawmill.png"))
+    stonemill = str(Path("project", "sprites", "buildings", "stonemill.png"))
+    watermill = str(Path("project", "sprites", "buildings", "watermill.png"))
+
 
 sprite_lookup = [
     Images.grass,
