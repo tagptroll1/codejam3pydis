@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from project.constants import TILESIZE, Images
 import pygame
-from pygame.sprite import Sprite
+from project.constants import Images, TILESIZE
 from pygame import Surface
+from pygame.sprite import Sprite
 
 
 class Building(Sprite):
