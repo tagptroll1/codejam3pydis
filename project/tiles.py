@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from random import randint, randrange, betavariate
+from random import randint
 
 import pygame
 from project.constants import Color, Images, NextColor, TILESIZE
