@@ -9,9 +9,8 @@ from project.constants import (
     GAMENAME, GRIDHEIGHT, GRIDWIDTH,
     HEIGHT, TILESIZE, WIDTH
 )
-
-from project.maps.map import Map
 from project.gui import GUI
+from project.maps.map import Map
 from project.player import CameraMan
 from project.tilemap import Camera
 from project.tiles import GetTile as get_tile
@@ -54,13 +53,12 @@ class Game:
             "water": 0
         }
 
-
-        #        for row, tiles in enumerate(self.map.data):
-        #            for col, tile in enumerate(tiles):
-        #                # Probably newline, but tile is sometimes None
-        #                if tile in ("012345"):
-        #                    # Fetches helper method for tile lookup and calls it
-        #                    get_tile.loopup(tile)(self, col, row)
+        # for row, tiles in enumerate(self.map.data):
+        #   for col, tile in enumerate(tiles):
+        #       Probably newline, but tile is sometimes None
+        #       if tile in ("012345"):
+        #       # Fetches helper method for tile lookup and calls it
+        #           get_tile.loopup(tile)(self, col, row)
 
         # gui
         self.gui = GUI(self)
