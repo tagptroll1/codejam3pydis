@@ -113,7 +113,6 @@ class Game:
                 # Button press
                 if event.key == pg.K_ESCAPE:
                     pass  # open menu
-                    self.quit()
 
             # Draw stone on clicked tile
             if event.type == pg.MOUSEBUTTONDOWN:
