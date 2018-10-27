@@ -66,10 +66,10 @@ class Grass(NoResource):
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
         imgnr = randint(0, 100)
-        if imgnr >= 16:
+        if imgnr >= 3:
             self.path = Images.grass
-        elif imgnr >= 4:
-            self.path = Images.grass_shrub
+        elif imgnr >= 1:
+            self.path = Images.grass
         else:
             self.path = Images.grass_rock
 
@@ -83,22 +83,22 @@ class PlantTile(Tile):
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.plant)
         # self.image.fill(Color.PLANT)
         self.type = 1  # Plant based food tile
 
         # TODO: Sprite can reflect the amount the tile provides
         self.start_value = randint(2, 10)
         self.value = self.start_value
+        self.update()
 
     def update(self):
         super().update()
         if self.value > 7:
             self.image = pygame.image.load(Images.plant_pluss)
-        elif self.value < 5:
-            self.image = pygame.image.load(Images.plant_minus)
-        else:
+        elif self.value > 2:
             self.image = pygame.image.load(Images.plant)
+        else:
+            self.image = pygame.image.load(Images.plant_minus)
 
     def rain(self) -> None:
         """
@@ -126,7 +126,7 @@ class AnimalTile(Tile):
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image.fill(Color.ANIMAL)
+        self.image = pygame.image.load(Images.animal)
         self.type = 2  # Animal based food tile
 
         # TODO: Sprite can reflect the amount the tile provides
@@ -153,7 +153,7 @@ class StoneTile(Tile):
 class WoodTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image.fill(Color.WOOD)
+        self.image = pygame.image.load(Images.wood)
         self.type = 4
 
         self.start_value = randint(1, 5)
@@ -163,11 +163,29 @@ class WoodTile(Tile):
 class WaterTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image.fill(Color.WATER)
+        self.image = pygame.image.load(Images.water)
         self.type = 5
 
         self.start_value = randint(1, 2)
         self.value = self.start_value
+
+
+class WaterSide(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces right
+        2 - water faces bottom
+        3 - water faces left
+        """
+        super().__init__(game, x, y)
+        self.image = pygame.image.load(Images.water_side)
+        self.type = 5
+
+        self.start_value = 1
+        self.value = self.start_value
+
+        self.image = pygame.transform.rotate(self.image, 90 * rotation)
 
 
 class GetTile:
@@ -184,7 +202,13 @@ class GetTile:
             "3": cls.stone,
             "4": cls.wood,
             "5": cls.water
-        }.get(i)
+        }.get(str(i))
+
+    @classmethod
+    def rotate_loopup(cls, i):
+        return {
+            "0": cls.water_side
+        }.get(str(i))
 
     @staticmethod
     def noresource(game, x: int, y: int) -> NoResource:
@@ -209,3 +233,7 @@ class GetTile:
     @staticmethod
     def water(game, x: int, y: int) -> WaterTile:
         return WaterTile(game, x, y)
+
+    @staticmethod
+    def water_side(game, x: int, y: int, rotation=0) -> WaterTile:
+        return WaterSide(game, x, y, rotation)
