@@ -4,7 +4,11 @@ import time
 from pathlib import Path
 
 import pygame as pg
-from project.constants import FPS, GRIDHEIGHT, GRIDWIDTH, HEIGHT, TILESIZE, WIDTH
+from project.constants import (
+    FPS, GRIDHEIGHT, GRIDWIDTH, 
+    HEIGHT, Spritesheet, SPRITESHEETPATH, 
+    TILESIZE, WIDTH
+    )
 from project.editor.gui import GUI
 from project.player import CameraMan
 from project.tilemap import Camera, Map
@@ -18,21 +22,23 @@ class Editor:
         pg.display.set_caption("Game editor")
         self.clock = pg.time.Clock()
         # self.map = Map([[0] * int(50) for _ in range(int(50))])
-        self.map = Map(save=Path("project", "saves", "1540499921.txt"))
+        save = Path("project", "saves", "1540754869.txt")
+        self.map = Map(save=save)
 
         self.startx = WIDTH / 2
         self.starty = HEIGHT / 2
         print("Editor opened")
 
     def new(self):
+        self.sheet = Spritesheet(str(SPRITESHEETPATH))
         self.all_sprites = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
         self.gui_group = pg.sprite.Group()
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
-                if str(tile) in ("012345"):
-                    get_tile.loopup(tile)(self, col, row)
+                if str(tile).isnumeric():
+                    get_tile.lookup(tile, self, col, row)
 
         self.gui = GUI(self)
         self.camera_man = CameraMan(self, GRIDWIDTH//2, GRIDHEIGHT//2)
@@ -40,7 +46,7 @@ class Editor:
 
     def save_map(self):
         Path("project", "saves").mkdir(exist_ok=True)
-        tosave = "\n".join(["".join(map(str, row)) for row in self.map.data])
+        tosave = "".join([",".join(map(str, row)) for row in self.map.data])
         with Path("project", "saves", f"{int(time.time())}.txt").open("w") as file:
             file.write(tosave)
 
@@ -81,7 +87,6 @@ class Editor:
                     for item in self.gui.picker.tiles:
                         if item.rect.collidepoint(x - self.gui.rect.left, y - self.gui.rect.top):
                             self.gui.selected_tile = item.type
-                            self.gui.rotation = item.rot
 
                     if self.gui.save.rect.collidepoint(x + 10, y - 10):
                         self.save_map()
@@ -94,17 +99,15 @@ class Editor:
                 # offsets the placement based on differance
                 x = (diffx + x) // TILESIZE
                 y = (diffy + y) // TILESIZE
-                if self.gui.selected_tile < 6:
-                    tile = get_tile.loopup(self.gui.selected_tile)(self, x, y)
-                else:
-                    tile = get_tile.rotate_loopup(
-                        self.gui.selected_tile - 6)(self, x, y, rotation=self.gui.rotation)
-                self.map.data[int(y)][int(x)] = tile.type
+     
+                tile = get_tile.lookup(self.gui.selected_tile, self, x, y)
+                self.map.data[int(y)][int(x)] = self.gui.selected_tile
 
     def update(self):
         self.all_sprites.update()
         self.tiles.update()
         self.camera.update(self.camera_man)
+        print(len(self.tiles))
 
     def draw(self):
         self.screen.fill((0, 0, 0))

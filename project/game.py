@@ -7,7 +7,8 @@ import pygame as pg
 from project.constants import (
     BGCOLOR, Color, FPS,
     GAMENAME, GRIDHEIGHT, GRIDWIDTH,
-    HEIGHT, TILESIZE, WIDTH
+    HEIGHT, Spritesheet, SPRITESHEETPATH, 
+    TILESIZE, WIDTH
 )
 from project.gui import GUI
 from project.maps.map import Map
@@ -34,7 +35,9 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
 
-        self.map = Map(GRIDHEIGHT, GRIDWIDTH, game=self)
+        self.sheet = Spritesheet(str(SPRITESHEETPATH))
+
+        self.map = Map(100, 100, game=self)
 
     def new(self):
         """
@@ -56,7 +59,7 @@ class Game:
         # for row, tiles in enumerate(self.map.data):
         #   for col, tile in enumerate(tiles):
         #       Probably newline, but tile is sometimes None
-        #       if tile in ("012345"):
+        #       if str(tile).isnumeric():
         #       # Fetches helper method for tile lookup and calls it
         #           get_tile.loopup(tile)(self, col, row)
 
@@ -151,7 +154,7 @@ class Game:
                 # offsets the placement based on differance
                 x = (diffx + x) // TILESIZE
                 y = (diffy + y) // TILESIZE
-                get_tile.stone(self, x, y)
+                get_tile.lookup(0, self, x, y)
 
     def show_start_screen(self):
         pass

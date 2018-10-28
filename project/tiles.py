@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
+from typing import Tuple
 
 import pygame
-from project.constants import Color, Images, NextColor, TILESIZE
+from project.constants import (
+    Color, Images, 
+    NextColor, TILESIZE
+)
 from pygame import Surface
 from pygame.sprite import Sprite
 
@@ -44,6 +48,9 @@ class Tile(Sprite):
         """
         self.value = self.start_value
 
+    def get_img(self, index: Tuple[int]):
+        return self.game.sheet.get_image(*index)
+
     def __repr__(self) -> str:
         """
         <Tile x=5, y=10, type=3>
@@ -66,14 +73,15 @@ class Grass(NoResource):
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
         imgnr = randint(0, 100)
-        if imgnr >= 3:
-            self.path = Images.grass
-        elif imgnr >= 1:
-            self.path = Images.grass
+        if imgnr > 3:
+            self.image = self.get_img(Images.grass)
+        elif imgnr == 3:
+            self.image = self.get_img(Images.grass_rock)
+        elif imgnr == 2:
+            self.image = self.get_img(Images.grass_dino_l)
         else:
-            self.path = Images.grass_rock
-
-        self.image = pygame.image.load(self.path)
+            self.image = self.get_img(Images.grass_stub)
+        
 
 
 class PlantTile(Tile):
@@ -94,11 +102,11 @@ class PlantTile(Tile):
     def update(self):
         super().update()
         if self.value > 7:
-            self.image = pygame.image.load(Images.plant_pluss)
+            self.image = self.get_img(Images.plant_minus)
         elif self.value > 2:
-            self.image = pygame.image.load(Images.plant)
+            self.image = self.get_img(Images.plant)
         else:
-            self.image = pygame.image.load(Images.plant_minus)
+            self.image = self.get_img(Images.plant_pluss)
 
     def rain(self) -> None:
         """
@@ -126,7 +134,7 @@ class AnimalTile(Tile):
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.animal)
+        self.image = self.get_img(Images.animal)
         self.type = 2  # Animal based food tile
 
         # TODO: Sprite can reflect the amount the tile provides
@@ -143,7 +151,7 @@ class AnimalTile(Tile):
 class StoneTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.stone)
+        self.image = self.get_img(Images.stone)
         self.type = 3
 
         self.start_value = randint(2, 8)
@@ -153,7 +161,9 @@ class StoneTile(Tile):
 class WoodTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.wood)
+        self.image = Surface((TILESIZE, TILESIZE))
+        self.image.fill(Color.WOOD)
+        #self.image = self.get_img(Images.wood)
         self.type = 4
 
         self.start_value = randint(1, 5)
@@ -163,7 +173,7 @@ class WoodTile(Tile):
 class WaterTile(Tile):
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.water)
+        self.image = self.get_img(Images.water)
         self.type = 5
 
         self.start_value = randint(1, 2)
@@ -174,66 +184,217 @@ class WaterSide(Tile):
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
-        1 - water faces right
+        1 - water faces left
         2 - water faces bottom
-        3 - water faces left
+        3 - water faces right
         """
         super().__init__(game, x, y)
-        self.image = pygame.image.load(Images.water_side)
-        self.type = 5
+        sides = [
+            Images.water_t,
+            Images.water_r,
+            Images.water_b,
+            Images.water_l,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 5 + rotation
 
         self.start_value = 1
         self.value = self.start_value
 
-        self.image = pygame.transform.rotate(self.image, 90 * rotation)
 
+class WaterLShape(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_tl,
+            Images.water_bl,
+            Images.water_br,
+            Images.water_tr,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 9 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class WaterCorner(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_cbl,
+            Images.water_cbr,
+            Images.water_ctr,
+            Images.water_ctl,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 13 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class DirtRock(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.dirt_rock_tl,
+            Images.dirt_rock_bl,
+            Images.dirt_rock_br,
+            Images.dirt_rock_tr,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 17 + rotation
+
+
+class DirtDino(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.dirt_dino_l,
+            Images.dirt_dino_b,
+            Images.dirt_dino_r,
+            Images.dirt_dino_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 21 + rotation
+
+
+class DirtSide(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.dirt_l,
+            Images.dirt_b,
+            Images.dirt_r,
+            Images.dirt_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 25 + rotation
+
+
+class DirtLShape(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.dirt_tl,
+            Images.dirt_bl,
+            Images.dirt_br,
+            Images.dirt_tr,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 29 + rotation
+
+
+class DirtCorner(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.dirt_ctl,
+            Images.dirt_cbl,
+            Images.dirt_cbr,
+            Images.dirt_ctr,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 33 + rotation
+
+
+# TODO: Fix docstring on classes
 
 class GetTile:
     """
     Helper class with static methods to generate and return
     new tiles to be rendered.
     """
-    @classmethod
-    def loopup(cls, i):
-        return {
-            "0": cls.noresource,
-            "1": cls.plant,
-            "2": cls.animal,
-            "3": cls.stone,
-            "4": cls.wood,
-            "5": cls.water
-        }.get(str(i))
-
-    @classmethod
-    def rotate_loopup(cls, i):
-        return {
-            "0": cls.water_side
-        }.get(str(i))
-
+    theclass = [
+            Grass,
+            PlantTile,
+            AnimalTile,
+            StoneTile,
+            WoodTile,
+            WaterTile,
+            (WaterSide, 0),
+            (WaterSide, 1),
+            (WaterSide, 2),
+            (WaterSide, 3),
+            (WaterLShape, 0),
+            (WaterLShape, 1),
+            (WaterLShape, 2),
+            (WaterLShape, 3),
+            (WaterCorner, 0),
+            (WaterCorner, 1),
+            (WaterCorner, 2),
+            (WaterCorner, 3),
+            (DirtRock, 0),
+            (DirtRock, 1),
+            (DirtRock, 2),
+            (DirtRock, 3),
+            (DirtDino, 0),
+            (DirtDino, 1),
+            (DirtDino, 2),
+            (DirtDino, 3),
+            (DirtSide, 0),
+            (DirtSide, 1),
+            (DirtSide, 2),
+            (DirtSide, 3),
+            (DirtLShape, 0),
+            (DirtLShape, 1),
+            (DirtLShape, 2),
+            (DirtLShape, 3),
+            (DirtCorner, 0),
+            (DirtCorner, 1),
+            (DirtCorner, 2),
+            (DirtCorner, 3),
+        ]
     @staticmethod
-    def noresource(game, x: int, y: int) -> NoResource:
-        return Grass(game, x, y)
+    def lookup(i, game, x, y):
+        tile_class = GetTile.theclass[int(i)]
 
-    @staticmethod
-    def plant(game, x: int, y: int) -> PlantTile:
-        return PlantTile(game, x, y)
+        if isinstance(tile_class, tuple):
+            tile_class, rot = tile_class
+            return tile_class(game, x, y, rot)
+        return tile_class(game, x, y)
 
-    @staticmethod
-    def animal(game, x: int, y: int) -> AnimalTile:
-        return AnimalTile(game, x, y)
-
-    @staticmethod
-    def stone(game, x: int, y: int) -> StoneTile:
-        return StoneTile(game, x, y)
-
-    @staticmethod
-    def wood(game, x: int, y: int) -> WoodTile:
-        return WoodTile(game, x, y)
-
-    @staticmethod
-    def water(game, x: int, y: int) -> WaterTile:
-        return WaterTile(game, x, y)
-
-    @staticmethod
-    def water_side(game, x: int, y: int, rotation=0) -> WaterTile:
-        return WaterSide(game, x, y, rotation)
+    
