@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pygame as pg
 from project.constants import (
-    FPS, GRIDHEIGHT, GRIDWIDTH, 
-    HEIGHT, Spritesheet, SPRITESHEETPATH, 
+    FPS, GRIDHEIGHT, GRIDWIDTH,
+    HEIGHT, SPRITESHEETPATH, Spritesheet,
     TILESIZE, WIDTH
-    )
+)
 from project.editor.gui import GUI
 from project.player import CameraMan
 from project.tilemap import Camera, Map
@@ -99,8 +99,7 @@ class Editor:
                 # offsets the placement based on differance
                 x = (diffx + x) // TILESIZE
                 y = (diffy + y) // TILESIZE
-     
-                tile = get_tile.lookup(self.gui.selected_tile, self, x, y)
+
                 self.map.data[int(y)][int(x)] = self.gui.selected_tile
 
     def update(self):

@@ -7,7 +7,7 @@ import pygame as pg
 from project.constants import (
     BGCOLOR, Color, FPS,
     GAMENAME, GRIDHEIGHT, GRIDWIDTH,
-    HEIGHT, Spritesheet, SPRITESHEETPATH, 
+    HEIGHT, SPRITESHEETPATH, Spritesheet,
     TILESIZE, WIDTH
 )
 from project.gui import GUI

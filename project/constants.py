@@ -37,6 +37,7 @@ GRIDHEIGHT = HEIGHT // TILESIZE
 
 CAMERASPEED = 800
 
+
 class Spritesheet:
     def __init__(self, filename):
         self.spritesheet = pygame.image.load(filename).convert()
@@ -50,10 +51,12 @@ class Spritesheet:
 
         return image
 
+
 def fetch_subimage(x, y):
     x *= TILESIZE
     y *= TILESIZE
     return (x, y, TILESIZE, TILESIZE)
+
 
 class Images:
     # Icons
@@ -86,6 +89,7 @@ class Images:
     water_lily1 = fetch_subimage(2, 6)
     water_lily2 = fetch_subimage(3, 6)
     water_ball = fetch_subimage(4, 6)
+
     # __blend tiles__
     # water
     water_t = fetch_subimage(12, 1)
@@ -100,6 +104,7 @@ class Images:
     water_cbr = fetch_subimage(10, 0)
     water_ctr = fetch_subimage(11, 0)
     water_ctl = fetch_subimage(12, 0)
+
     # dirt
     dirt_rock_tl = fetch_subimage(4, 0)
     dirt_rock_bl = fetch_subimage(5, 0)
@@ -122,8 +127,6 @@ class Images:
     dirt_cbr = fetch_subimage(6, 4)
     dirt_ctr = fetch_subimage(7, 4)
 
-
-
     # Buildings
     butcher = str(Path("project", "sprites", "buildings", "butcher.png"))
     farm = str(Path("project", "sprites", "buildings", "farm.png"))
@@ -132,8 +135,6 @@ class Images:
     sawmill = str(Path("project", "sprites", "buildings", "sawmill.png"))
     stonemill = str(Path("project", "sprites", "buildings", "stonemill.png"))
     watermill = str(Path("project", "sprites", "buildings", "watermill.png"))
-
-
 
 
 sprite_lookup = [
@@ -176,8 +177,6 @@ sprite_lookup = [
     Images.dirt_cbr,
     Images.dirt_ctr,
 ]
-
-
 
 
 class Fonts:

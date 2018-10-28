@@ -3,9 +3,8 @@
 from random import randint
 from typing import Tuple
 
-import pygame
 from project.constants import (
-    Color, Images, 
+    Color, Images,
     NextColor, TILESIZE
 )
 from pygame import Surface
@@ -81,14 +80,12 @@ class Grass(NoResource):
             self.image = self.get_img(Images.grass_dino_l)
         else:
             self.image = self.get_img(Images.grass_stub)
-        
 
 
 class PlantTile(Tile):
     """
     A Tile which provides food from plant matter
     """
-
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         # self.image.fill(Color.PLANT)
@@ -163,7 +160,7 @@ class WoodTile(Tile):
         super().__init__(game, x, y)
         self.image = Surface((TILESIZE, TILESIZE))
         self.image.fill(Color.WOOD)
-        #self.image = self.get_img(Images.wood)
+        # self.image = self.get_img(Images.wood)
         self.type = 4
 
         self.start_value = randint(1, 5)
@@ -349,45 +346,46 @@ class GetTile:
     new tiles to be rendered.
     """
     theclass = [
-            Grass,
-            PlantTile,
-            AnimalTile,
-            StoneTile,
-            WoodTile,
-            WaterTile,
-            (WaterSide, 0),
-            (WaterSide, 1),
-            (WaterSide, 2),
-            (WaterSide, 3),
-            (WaterLShape, 0),
-            (WaterLShape, 1),
-            (WaterLShape, 2),
-            (WaterLShape, 3),
-            (WaterCorner, 0),
-            (WaterCorner, 1),
-            (WaterCorner, 2),
-            (WaterCorner, 3),
-            (DirtRock, 0),
-            (DirtRock, 1),
-            (DirtRock, 2),
-            (DirtRock, 3),
-            (DirtDino, 0),
-            (DirtDino, 1),
-            (DirtDino, 2),
-            (DirtDino, 3),
-            (DirtSide, 0),
-            (DirtSide, 1),
-            (DirtSide, 2),
-            (DirtSide, 3),
-            (DirtLShape, 0),
-            (DirtLShape, 1),
-            (DirtLShape, 2),
-            (DirtLShape, 3),
-            (DirtCorner, 0),
-            (DirtCorner, 1),
-            (DirtCorner, 2),
-            (DirtCorner, 3),
-        ]
+        Grass,
+        PlantTile,
+        AnimalTile,
+        StoneTile,
+        WoodTile,
+        WaterTile,
+        (WaterSide, 0),
+        (WaterSide, 1),
+        (WaterSide, 2),
+        (WaterSide, 3),
+        (WaterLShape, 0),
+        (WaterLShape, 1),
+        (WaterLShape, 2),
+        (WaterLShape, 3),
+        (WaterCorner, 0),
+        (WaterCorner, 1),
+        (WaterCorner, 2),
+        (WaterCorner, 3),
+        (DirtRock, 0),
+        (DirtRock, 1),
+        (DirtRock, 2),
+        (DirtRock, 3),
+        (DirtDino, 0),
+        (DirtDino, 1),
+        (DirtDino, 2),
+        (DirtDino, 3),
+        (DirtSide, 0),
+        (DirtSide, 1),
+        (DirtSide, 2),
+        (DirtSide, 3),
+        (DirtLShape, 0),
+        (DirtLShape, 1),
+        (DirtLShape, 2),
+        (DirtLShape, 3),
+        (DirtCorner, 0),
+        (DirtCorner, 1),
+        (DirtCorner, 2),
+        (DirtCorner, 3),
+    ]
+
     @staticmethod
     def lookup(i, game, x, y):
         tile_class = GetTile.theclass[int(i)]
@@ -396,5 +394,3 @@ class GetTile:
             tile_class, rot = tile_class
             return tile_class(game, x, y, rot)
         return tile_class(game, x, y)
-
-    
