@@ -22,7 +22,7 @@ class Editor:
         pg.display.set_caption("Game editor")
         self.clock = pg.time.Clock()
         # self.map = Map([[0] * int(50) for _ in range(int(50))])
-        save = Path("project", "saves", "1540754869.txt")
+        save = Path("project", "saves", "1540822983.txt")
         self.map = Map(save=save)
 
         self.startx = WIDTH / 2
@@ -83,6 +83,11 @@ class Editor:
             if event.type == pg.MOUSEBUTTONDOWN:
                 x = event.pos[0]
                 y = event.pos[1]
+
+                print(x, y)
+                print(self.gui.save.rect)
+                if self.gui.save.rect.collidepoint(x, y):
+                    print("touching!")
                 if self.gui.rect.collidepoint(x, y):
                     for item in self.gui.picker.tiles:
                         if item.rect.collidepoint(x - self.gui.rect.left, y - self.gui.rect.top):
@@ -100,13 +105,13 @@ class Editor:
                 x = (diffx + x) // TILESIZE
                 y = (diffy + y) // TILESIZE
 
-                self.map.data[int(y)][int(x)] = self.gui.selected_tile
+                tile = get_tile.lookup(self.gui.selected_tile, self, x, y)
+                self.map.data[int(y)][int(x)] = tile.type
 
     def update(self):
         self.all_sprites.update()
         self.tiles.update()
         self.camera.update(self.camera_man)
-        print(len(self.tiles))
 
     def draw(self):
         self.screen.fill((0, 0, 0))
@@ -115,6 +120,5 @@ class Editor:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
         self.screen.blit(self.gui.image, self.gui.rect)
-        self.gui.draw()
 
         pg.display.flip()

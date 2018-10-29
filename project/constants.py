@@ -92,6 +92,18 @@ class Images:
 
     # __blend tiles__
     # water
+    water_rock_l = fetch_subimage(9, 2)
+    water_rock_b = fetch_subimage(10, 2)
+    water_rock_r = fetch_subimage(11, 2)
+    water_rock_t = fetch_subimage(12, 2)
+    water_dirtrock_l = fetch_subimage(9, 3)
+    water_dirtrock_b = fetch_subimage(10, 3)
+    water_dirtrock_r = fetch_subimage(11, 3)
+    water_dirtrock_t = fetch_subimage(12, 3)
+    water_flower_l = fetch_subimage(9, 4)
+    water_flower_b = fetch_subimage(10, 4)
+    water_flower_r = fetch_subimage(11, 4)
+    water_flower_t = fetch_subimage(12, 4)
     water_t = fetch_subimage(12, 1)
     water_r = fetch_subimage(11, 1)
     water_b = fetch_subimage(10, 1)
@@ -127,6 +139,20 @@ class Images:
     dirt_cbr = fetch_subimage(6, 4)
     dirt_ctr = fetch_subimage(7, 4)
 
+    # rock
+    rock_cbl = fetch_subimage(14, 0)
+    rock_cbr = fetch_subimage(15, 0)
+    rock_ctr = fetch_subimage(16, 0)
+    rock_ctl = fetch_subimage(17, 0)
+    rock_l = fetch_subimage(14, 1)
+    rock_b = fetch_subimage(15, 1)
+    rock_r = fetch_subimage(16, 1)
+    rock_t = fetch_subimage(17, 1)
+    rock_tl = fetch_subimage(14, 2)
+    rock_bl = fetch_subimage(15, 2)
+    rock_br = fetch_subimage(16, 2)
+    rock_tr = fetch_subimage(17, 2)
+
     # Buildings
     butcher = str(Path("project", "sprites", "buildings", "butcher.png"))
     farm = str(Path("project", "sprites", "buildings", "farm.png"))
@@ -144,6 +170,22 @@ sprite_lookup = [
     Images.grass_rock,
     Images.grass_stub,
     Images.water,
+    Images.water_rock,
+    Images.water_lily1,
+    Images.water_lily2,
+    Images.water_ball,
+    Images.water_rock_l,
+    Images.water_rock_b,
+    Images.water_rock_r,
+    Images.water_rock_t,
+    Images.water_dirtrock_l,
+    Images.water_dirtrock_b,
+    Images.water_dirtrock_r,
+    Images.water_dirtrock_t,
+    Images.water_flower_l,
+    Images.water_flower_b,
+    Images.water_flower_r,
+    Images.water_flower_t,
     Images.water_t,
     Images.water_r,
     Images.water_b,
@@ -176,6 +218,18 @@ sprite_lookup = [
     Images.dirt_cbl,
     Images.dirt_cbr,
     Images.dirt_ctr,
+    Images.rock_cbl,
+    Images.rock_cbr,
+    Images.rock_ctr,
+    Images.rock_ctl,
+    Images.rock_l,
+    Images.rock_b,
+    Images.rock_r,
+    Images.rock_t,
+    Images.rock_tl,
+    Images.rock_bl,
+    Images.rock_br,
+    Images.rock_tr,
 ]
 
 

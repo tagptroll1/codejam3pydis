@@ -10,7 +10,7 @@ class GUI(Sprite):
         self.groups = game.gui_group
         super().__init__(self.groups)
 
-        self.image = pg.Surface((200, 600))
+        self.image = pg.Surface((250, 700))
         self.rect = self.image.get_rect()
         self.game = game
         self.rect.right = WIDTH
@@ -25,10 +25,6 @@ class GUI(Sprite):
     def update(self):
         self.picker.update()
 
-    def draw(self):
-        self.picker.render_tiles()
-        self.image.blit(self.save.image, (10, 560))
-
 
 class Picker:
     def __init__(self, gui, game):
@@ -41,9 +37,12 @@ class Picker:
         for x, path in enumerate(sprite_lookup):
             MenuItem(path, x, self.gui, self)
 
-        self.gui.save = SaveButton(self, self.game)
-
         self.tiles.draw(self.gui.image)
+        self.gui.save = SaveButton(self, self.game)
+        self.gui.image.blit(
+            self.gui.save.image,
+            (10, 640)
+        )
 
 
 class MenuItem(Sprite):
@@ -52,7 +51,7 @@ class MenuItem(Sprite):
         super().__init__(self.groups)
         # tile icon
         self.type = x
-        self.x, self.y = divmod(x, 12)
+        self.x, self.y = divmod(x, 14)
         self.x = (self.x * 45) + 12
         self.y = (self.y * 45) + 12
 
@@ -74,6 +73,6 @@ class SaveButton(Sprite):
 
         self.image = pg.Surface((50, 20))
         self.rect = self.image.get_rect()
-        self.rect.left = picker.gui.rect.left + 20
-        self.rect.top = picker.gui.rect.top + 550
+        self.rect.left = picker.gui.rect.left + 10
+        self.rect.top = picker.gui.rect.top + 640
         self.image.fill(Color.BLACK)

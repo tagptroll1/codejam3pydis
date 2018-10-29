@@ -124,6 +124,7 @@ class Game:
             sprite.draw(self.gui.resources.image)
 
         pg.display.flip()
+        print(len(self.tiles))
 
     def events(self):
         """

@@ -86,6 +86,7 @@ class PlantTile(Tile):
     """
     A Tile which provides food from plant matter
     """
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         # self.image.fill(Color.PLANT)
@@ -177,6 +178,112 @@ class WaterTile(Tile):
         self.value = self.start_value
 
 
+class WaterRockTile(Tile):
+    def __init__(self, game, x: int, y: int):
+        super().__init__(game, x, y)
+        self.image = self.get_img(Images.water_rock)
+        self.type = 6
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class WaterLily(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_lily1,
+            Images.water_lily2,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 7 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class WaterBall(Tile):
+    def __init__(self, game, x: int, y: int):
+        super().__init__(game, x, y)
+        self.image = self.get_img(Images.water_ball)
+        self.type = 9
+
+        self.start_value = randint(1, 2)
+        self.value = self.start_value
+
+
+class WaterRock(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_rock_l,
+            Images.water_rock_b,
+            Images.water_rock_r,
+            Images.water_rock_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 13 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class WaterDirtRock(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_dirtrock_l,
+            Images.water_dirtrock_b,
+            Images.water_dirtrock_r,
+            Images.water_dirtrock_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 17 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
+class WaterFlower(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.water_flower_l,
+            Images.water_flower_b,
+            Images.water_flower_r,
+            Images.water_flower_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 21 + rotation
+
+        self.start_value = 1
+        self.value = self.start_value
+
+
 class WaterSide(Tile):
     def __init__(self, game, x, y, rotation=0):
         """
@@ -193,7 +300,7 @@ class WaterSide(Tile):
             Images.water_l,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 5 + rotation
+        self.type = 25 + rotation
 
         self.start_value = 1
         self.value = self.start_value
@@ -215,7 +322,7 @@ class WaterLShape(Tile):
             Images.water_tr,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 9 + rotation
+        self.type = 29 + rotation
 
         self.start_value = 1
         self.value = self.start_value
@@ -237,7 +344,7 @@ class WaterCorner(Tile):
             Images.water_ctl,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 13 + rotation
+        self.type = 33 + rotation
 
         self.start_value = 1
         self.value = self.start_value
@@ -259,7 +366,7 @@ class DirtRock(Tile):
             Images.dirt_rock_tr,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 17 + rotation
+        self.type = 37 + rotation
 
 
 class DirtDino(Tile):
@@ -278,7 +385,7 @@ class DirtDino(Tile):
             Images.dirt_dino_t,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 21 + rotation
+        self.type = 41 + rotation
 
 
 class DirtSide(Tile):
@@ -297,7 +404,7 @@ class DirtSide(Tile):
             Images.dirt_t,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 25 + rotation
+        self.type = 45 + rotation
 
 
 class DirtLShape(Tile):
@@ -316,7 +423,7 @@ class DirtLShape(Tile):
             Images.dirt_tr,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 29 + rotation
+        self.type = 49 + rotation
 
 
 class DirtCorner(Tile):
@@ -335,7 +442,64 @@ class DirtCorner(Tile):
             Images.dirt_ctr,
         ]
         self.image = self.get_img(sides[rotation])
-        self.type = 33 + rotation
+        self.type = 53 + rotation
+
+
+class RockCorner(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.rock_cbl,
+            Images.rock_cbr,
+            Images.rock_ctr,
+            Images.rock_ctl,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 57 + rotation
+
+
+class RockSide(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.rock_l,
+            Images.rock_b,
+            Images.rock_r,
+            Images.rock_t,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 61 + rotation
+
+
+class RockLSide(Tile):
+    def __init__(self, game, x, y, rotation=0):
+        """
+        0 - water faces top
+        1 - water faces left
+        2 - water faces bottom
+        3 - water faces right
+        """
+        super().__init__(game, x, y)
+        sides = [
+            Images.rock_tl,
+            Images.rock_bl,
+            Images.rock_br,
+            Images.rock_tr,
+        ]
+        self.image = self.get_img(sides[rotation])
+        self.type = 65 + rotation
 
 
 # TODO: Fix docstring on classes
@@ -352,6 +516,22 @@ class GetTile:
         StoneTile,
         WoodTile,
         WaterTile,
+        WaterRockTile,
+        (WaterLily, 0),
+        (WaterLily, 1),
+        WaterBall,
+        (WaterRock, 0),
+        (WaterRock, 1),
+        (WaterRock, 2),
+        (WaterRock, 3),
+        (WaterDirtRock, 0),
+        (WaterDirtRock, 1),
+        (WaterDirtRock, 2),
+        (WaterDirtRock, 3),
+        (WaterFlower, 0),
+        (WaterFlower, 1),
+        (WaterFlower, 2),
+        (WaterFlower, 3),
         (WaterSide, 0),
         (WaterSide, 1),
         (WaterSide, 2),
@@ -384,6 +564,18 @@ class GetTile:
         (DirtCorner, 1),
         (DirtCorner, 2),
         (DirtCorner, 3),
+        (RockCorner, 0),
+        (RockCorner, 1),
+        (RockCorner, 2),
+        (RockCorner, 3),
+        (RockSide, 0),
+        (RockSide, 1),
+        (RockSide, 2),
+        (RockSide, 3),
+        (RockLSide, 0),
+        (RockLSide, 1),
+        (RockLSide, 2),
+        (RockLSide, 3),
     ]
 
     @staticmethod
