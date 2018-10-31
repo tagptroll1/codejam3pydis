@@ -38,6 +38,7 @@ class Game:
         self.sheet = Spritesheet(str(SPRITESHEETPATH))
 
         self.map = Map(100, 100, game=self)
+        print(str(self.map))
 
     def new(self):
         """
@@ -66,7 +67,7 @@ class Game:
         # gui
         self.gui = GUI(self)
         # Camera
-        self.camera_man = CameraMan(self, GRIDWIDTH // 2, GRIDHEIGHT // 2)
+        self.camera_man = CameraMan(self, GRIDWIDTH / 2, GRIDHEIGHT / 2)
         self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -107,6 +108,18 @@ class Game:
             pg.draw.line(self.screen, Color.GREY,
                          (0, y), (WIDTH, y))
 
+    def draw_constructable(self):
+        surface = pg.Surface((TILESIZE, TILESIZE), pg.SRCALPHA)
+        for y in range(GRIDHEIGHT):
+            for x in range(GRIDWIDTH):
+                rect = pg.Rect(x * TILESIZE, y * TILESIZE, TILESIZE, TILESIZE)
+                if self.map.is_constructable(y, x, y, x):
+                    color = pg.Color(130, 255, 140, 100)
+                else:
+                    color = pg.Color(255, 0, 100, 120)
+                surface.fill(color)
+                self.screen.blit(surface, self.camera.apply_rect(rect))
+
     def draw(self):
         """
         Draw all sprites and flip display
@@ -117,6 +130,8 @@ class Game:
         for sprite in self.tiles:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
+        self.draw_constructable()
+
         self.gui_group.draw(self.screen)
         self.resource_icon.draw(self.screen)
 
@@ -124,7 +139,6 @@ class Game:
             sprite.draw(self.gui.resources.image)
 
         pg.display.flip()
-        print(len(self.tiles))
 
     def events(self):
         """
