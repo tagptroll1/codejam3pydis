@@ -1,8 +1,5 @@
 # How to run
 
-Either pipenv run start or python -m project
-To run the editor: pipenv run editor or python -m project --editor
-
 # Code Jam 3
 
 In a survery we recently conducted, we asked what theme people wanted to see for this code jam. The most popular option,
@@ -39,12 +36,16 @@ As usual, you should be using [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 
 ## Description
 
-`# TODO`
+The world is ending, apocalypses are appearing everywhere, stronger and deadlier. Your job is to gather as  
+much resources as possible and prepare your shelter before 10 minutes has passed in hopes to survive most of the  
+disasters
 
 ## How to run
 
-`# TODO`
+pipenv run start or python -m project
+To run the editor: pipenv run editor or python -m project --editor
 
 ## How to play
 
-`# TODO`
+Clicky things, awsd / arrows to move camera.
+Core gameplay is missing sadly :(
