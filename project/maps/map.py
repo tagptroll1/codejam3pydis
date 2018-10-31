@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from random import gauss, randrange
+from random import randrange
 
 import numpy as np
-from project.tiles import Grass, WaterTile, WoodTile
+
+from project.tiles import GrassTile, WaterTile, WoodTile
 
 
 class Map:
@@ -11,6 +12,7 @@ class Map:
         self.width = width
         self.height = height
         self.terrain = [[None] * width for _ in range(height)]
+        self.constructions = [[None] * width for _ in range(height)]
 
         self.generate_terrain()
 
@@ -33,13 +35,13 @@ class Map:
                 self.set_parcel(x, y, parcel_type, **parcel_kwargs)
 
     def generate_terrain(self):
-        self.initialize_base_terrain(Grass)
-        self.generate_trees(randrange((self.width * self.height) / 2))
-        self.generate_rivers(randrange(4), 1)
+        self.initialize_base_terrain(GrassTile)
+        # self.generate_trees(randrange((self.width * self.height) // 2))
+        self.generate_rivers(randrange(1, 4), 1)
 
     def generate_grass(self):
         """ Adds grass everywhere"""
-        self.initialize_base_terrain(Grass)
+        self.initialize_base_terrain(GrassTile)
 
     def generate_rivers(self, number, max_width):
         """initate rivers"""
@@ -53,43 +55,43 @@ class Map:
             y = randrange(0, self.height)
             self.set_parcel(x, y, WoodTile)
 
-    def generate_river(self, start_point, width):
+    def generate_river(self, start_point, width=1):
         """ Generates a single river from a starting point"""
-        directions = {
-            0: np.array((-1, 0)),  # North
-            1: np.array((-1, 1)),  # North-Est
-            2: np.array((0, 1)),  # Est
-            3: np.array((1, 1)),  # South-Est
-            4: np.array((1, 0)),  # South
-            5: np.array((1, -1)),  # South-West
-            6: np.array((0, -1)),  # West
-            7: np.array((-1, -1)),  # North-West
-        }
-        # initialize starting point
-        self.set_parcel(*start_point, WaterTile)
+        orientations = [
+            np.array((-1, 0)),  # north
+            np.array((0, 1)),  # est
+            np.array((1, 0)),  # south
+            np.array((0, -1)),  # west
+        ]
 
-        # choose a direction
-        dir_index = randrange(0, 8)
-        new_point = np.array(start_point) + directions[dir_index]
-        self.set_parcel(*new_point.tolist(), WaterTile)
-        previous_dir_index = dir_index
+        counter = 0
+        orientation_idx = randrange(0, 4)
+        new_point = np.array(start_point) + orientations[orientation_idx]
+        while new_point[0] not in (0, self.width) and new_point[1] not in (0, self.height):
+            self.set_parcel(*new_point, WaterTile)
 
-        # TODO an inifinite loop can occure because if no path il allowed.
-        # For instance a river trapped inside another one
+            counter += 1
+            try:
+                while isinstance(self.get_parcel(*new_point), WaterTile):
+                    idx = randrange(0, 100)
+                    if 75 < idx <= 88:
+                        orientation_idx = (orientation_idx + 1) % 4
+                    elif 88 < idx:
+                        orientation_idx = (orientation_idx - 1) % 4
 
-        # draw the river until it hits a border
-        while new_point[0] not in (0, self.width - 1) and new_point[1] not in (0, self.height - 1):
-            dir_index = int(np.clip(round(gauss(previous_dir_index, 1)), 0, 7))
+                    new_point += orientations[orientation_idx]
+            except IndexError:
+                pass
 
-            # no going backwards
-            if abs(dir_index - previous_dir_index) == 4:
-                continue
+            if counter > 100:
+                return
 
-            new_point += directions[dir_index]
-
-            # no colision with a existing river or itself
-            if isinstance(self.get_parcel(*new_point), WaterTile):
-                continue
-
-            self.set_parcel(*new_point.tolist(), WaterTile)
-            previous_dir_index = dir_index
+    def is_constructable(self, top, left, bottom, right):
+        try:
+            for y in range(top, bottom + 1):
+                if any(tile is not None for tile in self.constructions[y][left:right + 1]) \
+                        or any(not parcel.constructable for parcel in self.terrain[y][left:right + 1]):
+                    return False
+            return True
+        except IndexError:
+            print(f'is contructable indexerror: top: {top}, left: {left}, bottom: {bottom}, right: {right}')

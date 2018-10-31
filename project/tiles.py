@@ -68,7 +68,9 @@ class NoResource(Tile):
         self.type = 0
 
 
-class Grass(NoResource):
+class GrassTile(NoResource):
+    constructable = True
+
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
         imgnr = randint(0, 100)
@@ -86,6 +88,7 @@ class PlantTile(Tile):
     """
     A Tile which provides food from plant matter
     """
+    constructable = False
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
@@ -129,6 +132,7 @@ class AnimalTile(Tile):
     """
     A Tile which provides food from animals
     """
+    constructable = False
 
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
@@ -147,6 +151,8 @@ class AnimalTile(Tile):
 
 
 class StoneTile(Tile):
+    constructable = False
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         self.image = self.get_img(Images.stone)
@@ -157,6 +163,8 @@ class StoneTile(Tile):
 
 
 class WoodTile(Tile):
+    constructable = True
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         self.image = Surface((TILESIZE, TILESIZE))
@@ -169,6 +177,8 @@ class WoodTile(Tile):
 
 
 class WaterTile(Tile):
+    constructable = False
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         self.image = self.get_img(Images.water)
@@ -179,6 +189,8 @@ class WaterTile(Tile):
 
 
 class WaterRockTile(Tile):
+    constructable = False
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         self.image = self.get_img(Images.water_rock)
@@ -189,6 +201,8 @@ class WaterRockTile(Tile):
 
 
 class WaterLily(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -209,6 +223,8 @@ class WaterLily(Tile):
 
 
 class WaterBall(Tile):
+    constructable = False
+
     def __init__(self, game, x: int, y: int):
         super().__init__(game, x, y)
         self.image = self.get_img(Images.water_ball)
@@ -219,6 +235,8 @@ class WaterBall(Tile):
 
 
 class WaterRock(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -241,6 +259,8 @@ class WaterRock(Tile):
 
 
 class WaterDirtRock(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -263,6 +283,8 @@ class WaterDirtRock(Tile):
 
 
 class WaterFlower(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -285,6 +307,8 @@ class WaterFlower(Tile):
 
 
 class WaterSide(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -307,6 +331,8 @@ class WaterSide(Tile):
 
 
 class WaterLShape(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -329,6 +355,8 @@ class WaterLShape(Tile):
 
 
 class WaterCorner(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -351,6 +379,8 @@ class WaterCorner(Tile):
 
 
 class DirtRock(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -370,6 +400,8 @@ class DirtRock(Tile):
 
 
 class DirtDino(Tile):
+    constructable = True
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -389,6 +421,8 @@ class DirtDino(Tile):
 
 
 class DirtSide(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -408,6 +442,8 @@ class DirtSide(Tile):
 
 
 class DirtLShape(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -427,6 +463,8 @@ class DirtLShape(Tile):
 
 
 class DirtCorner(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -446,6 +484,8 @@ class DirtCorner(Tile):
 
 
 class RockCorner(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -465,6 +505,8 @@ class RockCorner(Tile):
 
 
 class RockSide(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -484,6 +526,8 @@ class RockSide(Tile):
 
 
 class RockLSide(Tile):
+    constructable = False
+
     def __init__(self, game, x, y, rotation=0):
         """
         0 - water faces top
@@ -510,7 +554,7 @@ class GetTile:
     new tiles to be rendered.
     """
     theclass = [
-        Grass,
+        GrassTile,
         PlantTile,
         AnimalTile,
         StoneTile,
