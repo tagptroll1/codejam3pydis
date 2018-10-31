@@ -3,7 +3,6 @@
 import sys
 
 import pygame as pg
-
 # from buildings import Building
 from project.constants import (
     BGCOLOR, Color, FPS,

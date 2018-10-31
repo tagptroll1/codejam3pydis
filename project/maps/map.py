@@ -2,7 +2,6 @@
 from random import randrange
 
 import numpy as np
-
 from project.tiles import GrassTile, WaterTile, WoodTile
 
 
