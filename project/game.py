@@ -48,12 +48,13 @@ class Game:
         self.resource_icon = pg.sprite.Group()
         self.resource_text = pg.sprite.Group()
 
-        self.values = {
+        self.resources = {
             "wood": 0,
             "stone": 0,
             "iron": 0,
             "food": 0,
-            "water": 0
+            "water": 0,
+            "population": 0,
         }
 
         # for row, tiles in enumerate(self.map.data):
@@ -143,11 +144,11 @@ class Game:
             if event.type == pg.MOUSEBUTTONDOWN:
                 x = event.pos[0]
                 y = event.pos[1]
+                print(x, y)
                 for gui in self.gui_group:
                     if gui.rect.collidepoint(x, y):
                         # player clicked a gui piece, dont interact with the world
-                        self.values["food"] += 1
-                        print("guiclick")
+                        self.resources["food"] += 1
                         return
                 # Calculates diff from start pos and camera pos
                 diffx = self.camera_man.x - self.startx

@@ -2,7 +2,7 @@
 from typing import Tuple
 
 import pygame
-from project.constants import Color, Fonts, HEIGHT, Images, WIDTH
+from project.constants import Color, Fonts, Images, WIDTH
 from pygame import Surface
 from pygame.sprite import Sprite
 
@@ -18,8 +18,8 @@ class ResourceGUI(Sprite):
         self.groups = game.gui_group
         super().__init__(self.groups)
         self.game = game
-        width = int(WIDTH * 0.7)
-        height = int(HEIGHT * 0.08)
+        width = 1000
+        height = 70
         self.image = Surface((width, height))
         self.rect = self.image.get_rect()
         self.rect.top = 0
@@ -28,13 +28,46 @@ class ResourceGUI(Sprite):
 
         # resources
         # self.wood = Wood(self, self.game)
-        # self.stone = Stone(self, self.game)
-        # self.iron = Iron(self, self.game)
+        self.stone = Stone(self, self.game)
+        self.iron = Iron(self, self.game)
         self.food = Food(self, self.game)
         # self.water = Water(self, self.game)
+        # self.population = Population(self, self.game)
 
-    def draw(self):
-        self.game.screen.blit(self.image, self.rect)
+    # def draw(self):
+        # self.game.screen.blit(self.image, self.rect)
+
+
+class Stone(Sprite):
+    def __init__(self, gui, game):
+        self.groups = game.resource_icon
+        super().__init__(self.groups)
+
+        self.path = Images.stone_icon
+        self.image = pygame.image.load(self.path).convert_alpha()
+        self.image.set_colorkey(Color.BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.top = 20
+        self.rect.left = 550
+
+        self.text = Text(game, "stone", bg=Color.GREY, top=20, left=350)
+        self.text.draw(self.image)
+
+
+class Iron(Sprite):
+    def __init__(self, gui, game):
+        self.groups = game.resource_icon
+        super().__init__(self.groups)
+
+        self.path = Images.iron_icon
+        self.image = pygame.image.load(self.path).convert_alpha()
+        self.image.set_colorkey(Color.BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.top = 20
+        self.rect.left = 750
+
+        self.text = Text(game, "iron", bg=Color.GREY, top=20, left=550)
+        self.text.draw(self.image)
 
 
 class Food(Sprite):
@@ -42,8 +75,6 @@ class Food(Sprite):
         self.groups = game.resource_icon
         super().__init__(self.groups)
 
-        self.gui = gui
-        self.game = game
         self.path = Images.food_icon
         self.image = pygame.image.load(self.path).convert_alpha()
         self.image.set_colorkey(Color.BLACK)
@@ -51,7 +82,7 @@ class Food(Sprite):
         self.rect.top = 20
         self.rect.left = 950
 
-        self.text = Text(self.game, "food", bg=Color.GREY, top=20, left=750)
+        self.text = Text(game, "food", bg=Color.GREY, top=20, left=750)
         self.text.draw(self.image)
 
 
@@ -74,7 +105,7 @@ class Text(Sprite):
         self.to_draw = True
         self.left = left
         self.top = top
-        self.values = game.values
+        self.values = game.resources
 
         self.text = str(self.values.get(self.key))
         self.old_text = None
