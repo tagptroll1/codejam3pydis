@@ -5,7 +5,7 @@ import sys
 import pygame as pg
 # from buildings import Building
 from project.constants import (
-    BGCOLOR, Color, Fonts, FPS,
+    BGCOLOR, Color, FPS, Fonts,
     GAMENAME, GAMETIME, GRIDHEIGHT,
     GRIDWIDTH, HEIGHT, SPRITESHEETPATH,
     Spritesheet, TILESIZE, WIDTH
