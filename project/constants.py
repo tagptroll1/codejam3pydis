@@ -27,7 +27,8 @@ class Color:
 WIDTH = 1600
 HEIGHT = 900
 FPS = 60
-GAMENAME = "Game Name"
+GAMENAME = "ApocalypsIO"
+GAMETIME = 600  # seconds
 SPRITESHEETPATH = Path("project", "sprites", "sheet.png")
 BGCOLOR = Color.BLACK
 

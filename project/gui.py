@@ -34,8 +34,45 @@ class ResourceGUI(Sprite):
         # self.water = Water(self, self.game)
         # self.population = Population(self, self.game)
 
+        self.timer = Timer(self, self.game)
+
     # def draw(self):
         # self.game.screen.blit(self.image, self.rect)
+
+
+class Timer(Sprite):
+    def __init__(self, gui, game):
+        self.groups = game.resource_text
+        super().__init__(self.groups)
+
+        self.image = Surface((120, 30))
+        self.image.fill(Color.GREY)
+        self.gui = gui
+        self.game = game
+        self.time = game.seconds
+        self.text = self.get_time()
+
+    def update(self):
+        self.time = self.game.seconds
+        self.text = self.get_time()
+
+    def draw(self, to):
+        to.blit(self.image, (900, 15))
+        to.blit(
+            Fonts.arial.render(
+                self.text, True, (0, 0, 0)
+            ),
+            (900, 15)
+        )
+
+    def get_time(self) -> str:
+        m, s = divmod(self.time, 60)
+        if m < 10:
+            m = f"0{m}"
+        if s < 10:
+            s = f"0{s}"
+
+        return f"{m}:{s}"
 
 
 class Stone(Sprite):
@@ -43,9 +80,11 @@ class Stone(Sprite):
         self.groups = game.resource_icon
         super().__init__(self.groups)
 
-        self.path = Images.stone_icon
-        self.image = pygame.image.load(self.path).convert_alpha()
-        self.image.set_colorkey(Color.BLACK)
+        # self.path = Images.stone_icon
+        # self.image = pygame.image.load(self.path).convert_alpha()
+        # self.image.set_colorkey(Color.BLACK)
+        self.image = Surface((32, 32))
+        self.image.fill(Color.BLACK)
         self.rect = self.image.get_rect()
         self.rect.top = 20
         self.rect.left = 550
@@ -59,9 +98,11 @@ class Iron(Sprite):
         self.groups = game.resource_icon
         super().__init__(self.groups)
 
-        self.path = Images.iron_icon
-        self.image = pygame.image.load(self.path).convert_alpha()
-        self.image.set_colorkey(Color.BLACK)
+        # self.path = Images.iron_icon
+        # self.image = pygame.image.load(self.path).convert_alpha()
+        # self.image.set_colorkey(Color.BLACK)
+        self.image = Surface((32, 32))
+        self.image.fill((220, 220, 220))
         self.rect = self.image.get_rect()
         self.rect.top = 20
         self.rect.left = 750

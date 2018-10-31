@@ -5,10 +5,10 @@ import sys
 import pygame as pg
 # from buildings import Building
 from project.constants import (
-    BGCOLOR, Color, FPS,
-    GAMENAME, GRIDHEIGHT, GRIDWIDTH,
-    HEIGHT, SPRITESHEETPATH, Spritesheet,
-    TILESIZE, WIDTH
+    BGCOLOR, Color, Fonts, FPS,
+    GAMENAME, GAMETIME, GRIDHEIGHT,
+    GRIDWIDTH, HEIGHT, SPRITESHEETPATH,
+    Spritesheet, TILESIZE, WIDTH
 )
 from project.gui import GUI
 from project.maps.map import Map
@@ -34,7 +34,8 @@ class Game:
         """
         self.all_sprites = pg.sprite.Group()
         self.tiles = pg.sprite.Group()
-
+        self.start_time = pg.time.get_ticks()
+        self.seconds = self.start_time
         self.sheet = Spritesheet(str(SPRITESHEETPATH))
 
         self.map = Map(100, 100, game=self)
@@ -81,6 +82,35 @@ class Game:
             self.events()
             self.update()
             self.draw()
+        self.game_over()
+
+    def game_over(self):
+        self.all_sprites.empty()
+        self.buildings.empty()
+        self.gui_group.empty()
+        self.resource_icon.empty()
+        self.resource_text.empty()
+        self.tiles.empty()
+
+        del self.gui
+        del self.camera
+        del self.camera_man
+
+        bg = pg.Surface((WIDTH, HEIGHT))
+        bg.fill(Color.GREY)
+
+        surface = pg.Surface((600, 300))
+        surface.fill(Color.GREY)
+
+        self.screen.blit(bg, (0, 0))
+        self.screen.blit(surface, (500, 250))
+        self.screen.blit(
+            Fonts.arial.render(
+                "Game over!", True, (0, 0, 0)
+            ),
+            (700, 380)
+        )
+        pg.display.flip()
 
     def quit(self):
         """
@@ -93,6 +123,10 @@ class Game:
         """
         Update the game and sprites
         """
+
+        self.seconds = GAMETIME - (pg.time.get_ticks() - self.start_time) // 1000
+        if self.seconds <= 0:
+            self.playing = False
         self.all_sprites.update()
         self.resource_text.update()
         self.camera.update(self.camera_man)
@@ -158,7 +192,6 @@ class Game:
             if event.type == pg.MOUSEBUTTONDOWN:
                 x = event.pos[0]
                 y = event.pos[1]
-                print(x, y)
                 for gui in self.gui_group:
                     if gui.rect.collidepoint(x, y):
                         # player clicked a gui piece, dont interact with the world

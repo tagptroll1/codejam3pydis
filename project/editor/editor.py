@@ -5,9 +5,8 @@ from pathlib import Path
 
 import pygame as pg
 from project.constants import (
-    FPS, GRIDHEIGHT, GRIDWIDTH,
-    HEIGHT, SPRITESHEETPATH, Spritesheet,
-    TILESIZE, WIDTH
+    FPS, HEIGHT, SPRITESHEETPATH,
+    Spritesheet, TILESIZE, WIDTH
 )
 from project.editor.gui import GUI
 from project.player import CameraMan
@@ -22,8 +21,8 @@ class Editor:
         pg.display.set_caption("Game editor")
         self.clock = pg.time.Clock()
         # self.map = Map([[0] * int(50) for _ in range(int(50))])
-        save = Path("project", "saves", "1540822983.txt")
-        self.map = Map(save=save)
+        # save = Path("project", "saves", "1540822983.txt")
+        self.map = Map()
 
         self.startx = WIDTH / 2
         self.starty = HEIGHT / 2
@@ -41,7 +40,7 @@ class Editor:
                     get_tile.lookup(tile, self, col, row)
 
         self.gui = GUI(self)
-        self.camera_man = CameraMan(self, GRIDWIDTH//2, GRIDHEIGHT//2)
+        self.camera_man = CameraMan(self, 12, 12)
         self.camera = Camera(self.map.width, self.map.height)
 
     def save_map(self):
@@ -84,10 +83,6 @@ class Editor:
                 x = event.pos[0]
                 y = event.pos[1]
 
-                print(x, y)
-                print(self.gui.save.rect)
-                if self.gui.save.rect.collidepoint(x, y):
-                    print("touching!")
                 if self.gui.rect.collidepoint(x, y):
                     for item in self.gui.picker.tiles:
                         if item.rect.collidepoint(x - self.gui.rect.left, y - self.gui.rect.top):

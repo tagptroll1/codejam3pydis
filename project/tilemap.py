@@ -14,7 +14,6 @@ class Map:
             with save.open() as f:
                 self.data = [line.split(",") for line in f]
 
-            print(self.data)
         elif not data:
             with open(Path("project", "map.txt"), "rt") as f:
                 self.data = [line.split(",") for line in f]
